@@ -23,19 +23,19 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install CMake 3.10.2
+      - name: Install CMake and NDK
         run: |
           yes | sdkmanager --licenses
           sdkmanager "platform-tools"
           sdkmanager "platforms;android-34"
           sdkmanager "build-tools;34.0.0"
-          sdkmanager "cmake;3.10.2.4988404"
+          sdkmanager "cmake;3.22.1"
           sdkmanager "ndk;25.2.9519653"
 
       - name: Create local.properties
         run: |
           echo "ndk.dir=$ANDROID_SDK_ROOT/ndk/25.2.9519653" > local.properties
-          echo "cmake.dir=$ANDROID_SDK_ROOT/cmake/3.10.2.4988404" >> local.properties
+          echo "cmake.dir=$ANDROID_SDK_ROOT/cmake/3.22.1" >> local.properties
 
       - name: Grant Execute Permission
         run: chmod +x gradlew
@@ -46,6 +46,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug
+          name: GameHub-Injector
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error

@@ -4,18 +4,19 @@ plugins {
 
 android {
     namespace 'com.dark.freemod'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.dark.freemod"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
-
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
         externalNativeBuild {
             cmake {
-                cppFlags ""
+                abiFilters 'arm64-v8a', 'armeabi-v7a'
             }
         }
     }
@@ -26,10 +27,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    
     externalNativeBuild {
         cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-            version '3.10.2'
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.22.1"
         }
     }
+    ndkVersion "25.2.9519653"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }
