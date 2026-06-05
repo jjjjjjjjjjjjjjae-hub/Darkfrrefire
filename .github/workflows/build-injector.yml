@@ -23,11 +23,14 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Install Gradle
-      run: sudo apt-get install -y gradle
+    # Сервердің өзіне Gradle Wrapper файлдарын нөлден заңды түрде құрғызу
+    - name: Setup Gradle Wrapper
+      run: |
+        gradle wrapper --gradle-version 8.0
+        chmod +x gradlew
 
-    - name: Build APK with System Gradle
-      run: gradle assembleDebug
+    - name: Build APK with Gradle Wrapper
+      run: ./gradlew assembleDebug
 
     - name: Upload Finished APK
       uses: actions/upload-artifact@v4
