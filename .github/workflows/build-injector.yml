@@ -23,21 +23,15 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Grant Execute Permission for Gradle
-      run: chmod +x gradlew
-      continue-on-error: true
+    - name: Install Gradle
+      run: sudo apt-get install -y gradle
 
-    - name: Build APK with Gradle
-      run: |
-        if [ -f gradlew ]; then
-          ./gradlew assembleDebug
-        else
-          echo "Gradlew файлы табылмады, бұл қадам өткізіледі."
-        fi
+    - name: Build APK with System Gradle
+      run: gradle assembleDebug
 
     - name: Upload Finished APK
       uses: actions/upload-artifact@v4
       with:
         name: GameHub-Injector
-        path: "**/build/outputs/apk/debug/*.apk"
-        if-no-files-found: warn
+        path: "app/build/outputs/apk/debug/*.apk"
+        if-no-files-found: error
