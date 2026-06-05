@@ -1,13 +1,22 @@
 name: Build Obsidian-Core
+
 on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup SDK & NDK
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Tools
         run: |
           yes | sdkmanager --licenses
           sdkmanager "cmake;3.22.1" "ndk;25.2.9519653"
+
       - name: Build
-        run: chmod +x gradlew && ./gradlew assembleDebug --stacktrace
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace
